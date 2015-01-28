@@ -11,12 +11,13 @@
 (function($){
     var popcornMp3,
         popcornImages = [
-            'https://raw.githubusercontent.com/kosinix/jquery-make-it-pop/master/jquery-make-it-pop/popcorn.png',
-            'https://raw.githubusercontent.com/kosinix/jquery-make-it-pop/master/jquery-make-it-pop/popcorn2.png'
+            'jquery-make-it-pop/popcorn.png',
+            'jquery-make-it-pop/popcorn2.png'
         ],
         popcornContainer,
         counter = 0,
-        timer;
+        timer,
+        scoreboard;
         
     // Main
     $.fn.makeItPop = function(method) {
@@ -34,7 +35,7 @@
     // Preload fun
     function _preload() {
         // Add audio
-        popcornMp3 = new Audio('https://raw.githubusercontent.com/kosinix/jquery-make-it-pop/master/jquery-make-it-pop/popcorn.mp3');
+        popcornMp3 = new Audio('jquery-make-it-pop/popcorn.mp3');
         
         // Remove on end
         popcornMp3.addEventListener('ended', function() {
@@ -50,7 +51,10 @@
     // Initialise popcorny goodness
     function _popit(){
         // Add container
-        popcornContainer = $( "<div></div>" ).appendTo( "body" );
+        popcornContainer = $( "<div id='popContainer'></div>" ).appendTo( "body" );
+        
+        // Add scoreboard
+        scoreboard = $( "<div id='scoreboard'>Click to Kill! Kill! Kill! - Score: <span>0<span></div>" ).appendTo( "#popContainer" )
         
         // Add CSS
         popcornContainer.css({
@@ -61,6 +65,18 @@
             width: "100%",
             zIndex: "10000"
         });
+        scoreboard.css({
+            position: "absolute",
+            top: "10px",
+            right: "20px",
+            color: "#fff",
+            fontSize: "20px",
+            zIndex: 9999,
+            backgroundColor: 'red',
+            border: '1px #000 solid',
+            borderRadius: '5px',
+            padding: '20px'
+        });
         
         // Play music
         popcornMp3.currentTime = 0;
@@ -68,6 +84,9 @@
         
         // Start popin!
         _addPopcorn();
+        
+        // Init kill kill kill!
+        _killPop();
     }
     function _addPopcorn() {
         timer = setTimeout(function() {
@@ -92,6 +111,9 @@
                 mozTransform: "rotate("+rotation+"deg)"
             });
             
+            // Animate yo!
+            popcorn.animate({top: '-200px'}, 10000);
+            
             // Behave
             counter++;
             if (counter>500) { // Prevent infinite popcorn madness.
@@ -108,6 +130,15 @@
         popcornMp3.pause();
         clearTimeout(timer);
         popcornContainer.remove();
+    }
+    
+    // kill kill kill!
+    function _killPop() {
+        $(document).on('click', '#popContainer img', function(){
+            $(this).remove();
+            scoreUpdate = parseInt(scoreboard.find('span').html()) + 1;
+            scoreboard.find('span').html(scoreUpdate);            
+        });            
     }
 })(jQuery);
 
