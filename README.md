@@ -15,8 +15,9 @@ Designers hate when clients ask for a site that 'pops'. Well, now you can delive
 
 Those pesky popcorns are moving now! Click on them and Kill! Kill! Kill!
 
-Try [demo here](#)
+Try [demo here](http://jelontok.com/jquery-make-it-pop/)
 
 ### Credits
 Based on [jQuery Make It Pop!](http://www.kosinix.com/jquery-make-it-pop/) by Nico Amarilla
+
 Based on [Make It Pop](https://github.com/joemckie/make-it-pop) by Joe McKie and BluthCompany.
